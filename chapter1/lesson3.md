@@ -199,6 +199,45 @@ function copy(o, p) {
 |   &=    | a &= b   |   a = a & b  |
 |   ^=    |  a ^= b  |   a = a ^ b  |
 
+##4.12 eval()表达式
+
+```
+var geval = eval;                 // Using another name does a global eval
+var x = "global", y = "global";   // Two global variables
+function f() {                    // This function does a local eval
+    var x = "local";              // Define a local variable
+    eval("x += 'changed';");      // Direct eval sets local variable
+    return x;                     // Return changed local variable
+}
+function g() {                    // This function does a global eval
+    var y = "local";              // A local variable
+    geval("y += 'changed';");     // Indirect eval sets global variable
+    return y;                     // Return unchanged local variable
+}
+console.log(f(), x); // Local variable changed: prints "localchanged global": 
+console.log(g(), y); // Global variable changed: prints "local globalchanged":
+```
+
+## 4.13 其他运算符
++ 条件运算符(?:)
+
+```
+x > 0 ? x : -x     // The absolute value of x
+
+greeting = "hello " + (username ? username : "there");
+```
++ valueof()
+|x                      |typeof x   |
+| ------:|---------:|
+|undefined              |"undefined"    |
+|null                   |"object"   |
+|true or false          |"boolean"  |
+|any number or NaN      |"number"   |
+|any string             |"string"   |
+|any function           |"function" |
+|any nonfunction native |object "object"    |
+|any host object        | An implementation-defined string, but not “undefined”, “boolean”, “number”, or “string”.  |
+
 运算符总结：[svg版本](../images/operator.svg)
 ![operator](../images/operator.png)
 
