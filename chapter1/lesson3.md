@@ -229,7 +229,7 @@ greeting = "hello " + (username ? username : "there");
 + valueof()
 
 |x                      |typeof x   |
-| ------:|---------:|
+| :------|:---------|
 |undefined              |"undefined"    |
 |null                   |"object"   |
 |true or false          |"boolean"  |
