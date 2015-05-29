@@ -56,7 +56,7 @@ var square = {
 var square = function(x) { return x * x; }
 ```
 
-##4.5 属性表达式
+##4.4 属性表达式
 ```
 expression . identifier
 expression [ expression ]
@@ -126,3 +126,6 @@ true + true   // => 2: addition after boolean-to-number
 1 + 2 + " blind mice";    // => "3 blind mice"
 1 + (2 + " blind mice");  // => "12 blind mice"
 ```
+运算符总结：
+![operator](../images/operator.svg)
+
