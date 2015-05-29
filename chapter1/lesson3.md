@@ -227,6 +227,7 @@ x > 0 ? x : -x     // The absolute value of x
 greeting = "hello " + (username ? username : "there");
 ```
 + valueof()
+
 |x                      |typeof x   |
 | ------:|---------:|
 |undefined              |"undefined"    |
