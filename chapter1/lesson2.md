@@ -334,7 +334,7 @@ n + " objects"      // => "NaN objects": NaN converts to string "NaN"
 javascript 类型转换：
 ![datatype-converse](../images/datatype-converse.png)
 
-转换与相等性：
++ 转换与相等性：
 一个值转换为领一个值，并不意味着两个值相等。
 ```
 null == undefined // These two values are treated as equal.
@@ -342,3 +342,205 @@ null == undefined // These two values are treated as equal.
 0 == false        // Boolean converts to number before comparing.
 "0" == false      // Both operands convert to numbers before comparing.
 ```
+
++ 显示类型转换
+```
+Number("3")           // => 3
+String(false)         // => "false"  Or use false.toString()
+Boolean([])           // => true
+Object(3)             // => new Number(3)
+```
+运算符的隐式转换：
+```
+x + ""           // Same as String(x)
++x               // Same as Number(x).  You may also see x-0
+!!x              // Same as Boolean(x). Note double !
+```
+
+Number类的进制转换：
+```
+var n = 17;
+binary_string = n.toString(2);        // Evaluates to "10001"
+octal_string = "0" + n.toString(8);   // Evaluates to "021"
+hex_string = "0x" + n.toString(16);   // Evaluates to "0x11"
+```
+
+科学数据处理：
+```
+var n = 123456.789;
+n.toFixed(0);         // "123457"
+n.toFixed(2);         // "123456.79"
+n.toFixed(5);         // "123456.78900"
+n.toExponential(1);   // "1.2e+5"
+n.toExponential(3);   // "1.235e+5"
+n.toPrecision(4);     // "1.235e+5"
+n.toPrecision(7);     // "123456.8"
+n.toPrecision(10);    // "123456.7890"
+```
+
+字符串转换为数字：parseInt() 或 parseFloat()
+```
+parseInt("3 blind mice")     // => 3
+parseFloat(" 3.14 meters")   // => 3.14
+parseInt("-12.34")           // => -12
+parseInt("0xFF")             // => 255
+parseInt("0xff")             // => 255
+parseInt("-0XFF")            // => -255
+parseFloat(".1")             // => 0.1
+parseInt("0.1")              // => 0
+parseInt(".1")               // => NaN: integers can't start with "."
+parseFloat("$72.47");        // => NaN: numbers can't start with "$"
+```
+
+字符串转换成数字（2进制）:parseInt("Str",2)
+```
+parseInt("11", 2);           // => 3 (1*2 + 1)
+parseInt("ff", 16);          // => 255 (15*16 + 15)
+parseInt("zz", 36);          // => 1295 (35*36 + 35)
+parseInt("077", 8);          // => 63 (7*8 + 7)
+parseInt("077", 10);         // => 77 (7*10 + 7)
+```
+
++ 对象转换成原始值：
+1.  对象转boolean 类型：
+
+所有的对象（数组和函数）都转换成true，包括包装对象： `new Boolean(false)` 是一个对象而不是原始值，也是true.
+ 
+2. 对象转字符串：
+所有对象都继承了2个转换方法： toString() 和 valueof()
+```
+({x:1, y:2}).toString()    // => "[object Object]"
+```
+数组、函数  正则 日期：
+```
+[1,2,3].toString()                  // => "1,2,3"
+(function(x) { f(x); }).toString()  // => "function(x) {\n    f(x);\n}"
+/\d+/g.toString()                   // => "/\\d+/g"
+new Date(2010,0,1).toString()  // => "Fri Jan 01 2010 00:00:00 GMT-0800 (PST)"
+```
+valueof():存在原始值，返回原始值，否则返回自身
+```
+var d = new Date(2010, 0, 1);   // January 1st, 2010, (Pacific time)
+d.valueOf()                     // => 1262332800000
+```
++ 对象转换成字符串的步骤：
+
+1. 如果对象具有`toString()` 方法，则调用这个方法。如果它返回一个原始值，Javascript将这个值转换为字符串，并返回字符串的结果。
+2. 如果没有`toString()` 方法，或者方法不返回一个原始值，则会调用 `valueof()` 方法。如果存在这个方法，则调用它。返回原始值，Javascript将这个值转换为字符串，并返回字符串的结果。
+3. 否则，javaScript无法从toString（） 或者valueof()获得一个原始值，因此跑出一个类型错误异常
+
++ 对象返回数字的过程：
+
+1. 如果此对象具有valueof()方法，后者返回一个原始值，则javaScript将这个原始值转换成数字，并返回数字。
+2. 否则，如果对象具有toString() 方法，后者返回一个原始值，则javaScript将其转换并返回。
+3. 否则，javaScript抛出一个类型错误异常。
+
+为什么空数组会转换成数字0而为什么具有单个元素的数组同样会转换成一个数字？
+
+> 数组继承了默认的valueof() 方法，这个方法返回一个对象而不是一个原始值。因此数组到数字的转换调用toString() 方法。空数组转换成空字符串，转成0。一个元素的数组会转换成字符串并转换成数字。如果一个数组只包含一个数字的元素也会转换成字符串在转换成数字。
+ 
+`+`, `==` 的操作数有一个是对象，则会先将对象转换成原始值。 
+` + `,` == ` 的一个操作数是日起对象时，通过valueof() 或 toString() 返回的原始值会被直接使用。 `-`,`==`,`>`,`<`也是类似。
+
+```
+var now = new Date();     // Create a Date object
+typeof (now + 1)          // => "string": + converts dates to strings
+typeof (now - 1)          // => "number": - uses object-to-number conversion
+now == now.toString()     // => true: implicit and explicit string conversions
+now > (now -1)            // => true: > converts a Date to a number
+```
+
+##3.11 变量声明
+
+```
+var i;
+var sum;
+
+var i, sum;
+
+var message = "hello";
+var i = 0, j = 0, k = 0;
+```
+
+##3.12 变量的作用域
+
+全局变量拥有全局作用域。局部变量的作用域是局部的。函数参数的作用域在函数内定义。
+```
+var scope = "global";         // Declare a global variable
+function checkscope() {
+    var scope = "local";      // Declare a local variable with the same name
+    return scope;             // Return the local value, not the global one
+}
+checkscope()                  // => "local"
+```
+
+```
+scope = "global";            // Declare a global variable, even without var.
+function checkscope2() {
+    scope = "local";         // Oops! We just changed the global variable.
+    myscope = "local";       // This implicitly declares a new global variable
+    return [scope, myscope]; // Return two values.
+}
+checkscope2()                // => ["local", "local"]: has side effects!
+scope                        // => "local": global variable has changed.
+myscope                      // => Uncaught ReferenceError: myscope is not defined
+```
+
+```
+var scope = "global scope";          // A global variable
+function checkscope() {
+    var scope = "local scope";       // A local variable
+    function nested() {
+        var scope = "nested scope";  // A nested scope of local variables
+        return scope;                // Return the value in scope here
+    }
+    return nested();
+}
+checkscope()                         // => "nested scope"
+```
+函数作用域 与 声明提前
+```
+function test(o) {
+    var i = 0;                      // i is defined throughout function
+    if (typeof o == "object") {
+        var j = 0;                  // j is defined everywhere, not just block
+        for(var k=0; k < 10; k++) { // k is defined everywhere, not just loop
+            console.log(k);         // print numbers 0 through 9
+        }
+        console.log(k);             // k is still defined: prints 10
+    }
+    console.log(j);                 // j is defined, but may not be initialized
+}
+```
+
+```
+var scope = "global";
+function f() {
+    console.log(scope);  // Prints "undefined", not "global"
+    var scope = "local"; // Variable initialized here, but defined everywhere
+    console.log(scope);  // Prints "local"
+}
+```
+
+```
+function f() {
+    var scope;          // Local variable is declared at the top of the function
+    console.log(scope); // It exists here, but still has "undefined" value
+    scope = "local";    // Now we initialize it and give it a value
+    console.log(scope); // And here it has the value we expect
+}
+```
+
+作为属性的变量
+
+```
+var truevar = 1;     // A properly declared global variable, nondeletable.
+fakevar = 2;         // Creates a deletable property of the global object.
+this.fakevar2 = 3;   // This does the same thing.
+delete truevar       // => false: variable not deleted
+delete fakevar       // => true: variable deleted
+delete this.fakevar2 // => true: variable deleted
+```
+
+作用域链：
+javaScript是基于词法作用域的语言。
