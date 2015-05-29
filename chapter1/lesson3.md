@@ -126,6 +126,80 @@ true + true   // => 2: addition after boolean-to-number
 1 + 2 + " blind mice";    // => "3 blind mice"
 1 + (2 + " blind mice");  // => "12 blind mice"
 ```
+
+##4.9 关系表达式：
+ 相等 ==
+ 不等 !=
+ 恒等 ===
+ 赋值 =
+ 比较： <  >  >= <=
+ 
++ in 运算符
+```
+var point = { x:1, y:1 };  // Define an object
+"x" in point               // => true: object has property named "x"
+"z" in point               // => false: object has no "z" property.
+"toString" in point        // => true: object inherits toString method
+var data = [7,8,9];        // An array with elements 0, 1, and 2
+"0" in data                // => true: array has an element "0"
+1 in data                  // => true: numbers are converted to strings
+3 in data                  // => false: no element 3
+```
+
++ instanceof 运算符
+```
+var d = new Date();  // Create a new object with the Date() constructor
+d instanceof Date;   // Evaluates to true; d was created with Date()
+d instanceof Object; // Evaluates to true; all objects are instances of Object
+d instanceof Number; // Evaluates to false; d is not a Number object
+var a = [1, 2, 3];   // Create an array with array literal syntax
+a instanceof Array;  // Evaluates to true; a is an array
+a instanceof Object; // Evaluates to true; all arrays are objects
+a instanceof RegExp; // Evaluates to false; arrays are not regular expressions
+```
+
++ 逻辑运算符
+```
+var o = { x : 1 };
+var p = null;
+o && o.x     // => 1: o is truthy, so return value of o.x
+p && p.x     // => null: p is falsy, so return it and don't evaluate p.x
+
+if (a == b) stop();   // Invoke stop() only if a == b
+(a == b) && stop();   // This does the same thing
+
+
+// If max_width is defined, use that.  Otherwise look for a value in
+// the preferences object.  If that is not defined use a hard-coded constant.
+var max = max_width || preferences.max_width || 500;
+
+// Copy the properties of o to p, and return p
+function copy(o, p) {
+   p = p || {};  // If no object passed for p, use a newly created object.
+   // function body goes here
+}
+
+// These two equalities hold for any values of p and q
+!(p && q) === !p || !q
+!(p || q) === !p && !q
+```
+
+##4.11 赋值表达式
+
+|Operator |Example| Equivalent|
+|-------:|-------:|--------:|
+|+=     | a += b    |   a = a + b  |
+|-=     | a -= b    |   a = a - b  |
+|*=     | a *= b    |   a = a * b  |
+| /=    | a /= b    |    a = a / b |
+| %=     | a %= b   |   a = a % b   |
+| <<=   |  a <<= b  |   a = a << b  |
+|   >>= | a>>= b    |    a = a >> b |
+|   >>>=  |a >>>= b  |   a = a >>> b    |
+|   &=    | a &= b   |   a = a & b  |
+|    |=   |  a |= b  |   a = a | b  |
+|   ^=    |  a ^= b  |   a = a ^ b  |
+
 运算符总结：[svg版本](../images/operator.svg)
 ![operator](../images/operator.png)
 
