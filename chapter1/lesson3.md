@@ -197,7 +197,6 @@ function copy(o, p) {
 |   >>= | a>>= b    |    a = a >> b |
 |   >>>=  |a >>>= b  |   a = a >>> b    |
 |   &=    | a &= b   |   a = a & b  |
-|    |=   |  a |= b  |   a = a | b  |
 |   ^=    |  a ^= b  |   a = a ^ b  |
 
 运算符总结：[svg版本](../images/operator.svg)
