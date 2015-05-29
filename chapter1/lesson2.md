@@ -102,3 +102,64 @@ var negz = -0;        // Negative zero
 zero === negz         // => true: zero and negative zero are equal 
 1/zero === 1/negz     // => false: infinity and -infinity are not equal
 ```
+
+javascript 的实数是真实值得一个近似表示
+```
+var x = .3 - .2;    // thirty cents minus 20 cents
+var y = .2 - .1;    // twenty cents minus 10 cents
+x == y              // => false: the two values are not the same!
+x == .1             // => false: .3-.2 is not equal to .1
+y == .1             // => true: .2-.1 is equal to .1
+```
+
++ 日期与时间
+```
+var then = new Date(2010, 0, 1);  // The 1st day of the 1st month of 2010
+var later = new Date(2010, 0, 1,  // Same day, at 5:10:30pm, local time 17, 10, 30);
+var now = new Date();          // The current date and time
+var elapsed = now - then;      // Date subtraction: interval in milliseconds 
+later.getFullYear()            // => 2010
+later.getMonth()               // => 0: zero-based months
+later.getDate()                // => 1: one-based days
+later.getDay()                 // => 5: day of week.  0 is Sunday 5 is Friday.
+later.getHours()               // => 17: 5pm, local time
+later.getUTCHours()            // hours in UTC time; depends on timezone
+```
+
++ 文本
+
+字符串是一组由16位值组成的不可变有序序列。每个字符通常为Unicode字符
+
+> javascript 定义字符串方法均作用于16位值，而非字符，且不会对代理想进行单独处理，同样Javascript也不会对字符串进行标准化的加工，甚至不能保证字符串是合法的UTF-16位格式
+
+字符串的直接量：
+```
+""  // The empty string: it has zero characters
+'testing'
+"3.14"
+'name="myform"'
+"Wouldn't you prefer O'Reilly's book?"
+"This string\nhas two lines"
+"π is the ratio of a circle's circumference to its diameter"
+"two\nlines"   // A string representing 2 lines written on one line
+"one\          // A one-line string written on 3 lines. ECMAScript 5 only.
+ long\
+ line"
+```
+
++ 转义字符
+
+| 转义字符       | 含义           |
+| ------------- |:-------------:| 
+| \0    | NULL字符（\u0000） | 
+| \b    | 退格符（\u0008）      |   
+| \t    | 水平制表符（\u0009）      | 
+| \n    | 换行符（ \u000A）|
+| \v    | 垂直制表符（\u000B） | 
+| \f    | 转页符（\u000C）      |   
+| \r    | 回车符（\u000D）      | 
+| \"    | 双引号（ \u0022）|
+| \'    | 单引号（ \u0027）|
+| \\    | 反斜杠（\u005C） | 
+| \xXX  | The Latin-1 character specified by the two hexadecimal digits XX      |   
+| \uXXXX| The Unicode character specified by the four hexadecimal digits XXXX     | 
