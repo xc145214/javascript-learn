@@ -126,6 +126,6 @@ true + true   // => 2: addition after boolean-to-number
 1 + 2 + " blind mice";    // => "3 blind mice"
 1 + (2 + " blind mice");  // => "12 blind mice"
 ```
-运算符总结：
+运算符总结：[svg版本](../images/operator.svg)
 ![operator](../images/operator.png)
 
