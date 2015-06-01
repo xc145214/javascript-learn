@@ -441,7 +441,7 @@ var hasStrictMode = (function() { "use strict"; return this===undefined}());
 ##5.8 总结
 
 |语句  | 语法 | 用途|
-|--------:|--------:|--------:|
+|:--------|:--------|:--------|
 | break |   break [label]; | Exit from the innermost loop or switch or from named enclosing statement |
 |case | case expression: | Label a statement within a switch|
 |continue | continue [label]; | Begin next iteration of the innermost loop or the named loop|
