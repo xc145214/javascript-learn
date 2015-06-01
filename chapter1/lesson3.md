@@ -226,7 +226,7 @@ x > 0 ? x : -x     // The absolute value of x
 
 greeting = "hello " + (username ? username : "there");
 ```
-+ valueof()
++ typeof()
 
 |x                      |typeof x   |
 | :------|:---------|
@@ -236,8 +236,41 @@ greeting = "hello " + (username ? username : "there");
 |any number or NaN      |"number"   |
 |any string             |"string"   |
 |any function           |"function" |
-|any nonfunction native |object "object"    |
+|any nonfunction native object | "object"    |
 |any host object        | An implementation-defined string, but not “undefined”, “boolean”, “number”, or “string”.  |
+
++ delete 运算符
+
+```
+var o = { x: 1, y: 2}; // Start with an object
+delete o.x;            // Delete one of its properties
+"x" in o               // => false: the property does not exist anymore
+var a = [1,2,3];       // Start with an array
+delete a[2];           // Delete the last element of the array
+a.length               // => 2: array only has two elements now
+```
+
+```
+var o = {x:1, y:2};  // Define a variable; initialize it to an object
+delete o.x;          // Delete one of the object properties; returns true
+typeof o.x;          // Property does not exist; returns "undefined"
+delete o.x;          // Delete a nonexistent property; returns true
+delete o;            // Can't delete a declared variable; returns false.
+                     // Would raise an exception in strict mode.
+delete 1;            // Argument is not an lvalue: returns true
+this.x = 1;          // Define a property of the a global object without var
+delete x;            // Try to delete it: returns true in non-strict mode
+```
++ void 运算符
+
++  逗号运算符
+```
+/ The first comma below is part of the syntax of the var statement
+// The second comma is the comma operator: it lets us squeeze 2
+// expressions (i++ and j--) into a statement (the for loop) that expects 1.
+for(var i=0,j=10; i < j; i++,j--)
+    console.log(i+j);
+```
 
 运算符总结：[svg版本](../images/operator.svg)
 ![operator](../images/operator.png)
