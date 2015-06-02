@@ -9,4 +9,5 @@
     * [5.对象](chapter1/lesson5.md)
     * [6.数组](chapter1/lesson6.md)
     * [7.函数](chapter1/lesson7.md)
+    * [8.模块和类](chapter1/lesson8.md)
    
